@@ -1,4 +1,5 @@
 MNIST_data/
-*.np
+checkpoint
+*.ckpt
 *.meta
 *.pyc
