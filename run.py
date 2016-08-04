@@ -37,7 +37,7 @@ for step in range(100000):
     batch_x2, batch_y2 = mnist.train.next_batch(128)
     batch_y = (batch_y1 == batch_y2).astype('float')
 
-    _, loss_v = sess.run([train_step, loss], feed_dict={
+    _, loss_v = sess.run([train_step, siamese.loss], feed_dict={
                         siamese.x1: batch_x1, 
                         siamese.x2: batch_x2, 
                         siamese.y_: batch_y})
