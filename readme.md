@@ -1,6 +1,8 @@
 # Implementing Siamese network using Tensorflow with MNIST example
 
-<p align="center"> ![result](https://github.com/ywpkwon/siamese_tf_mnist/result.png) </p>
+<p align="center"> !
+[result](https://github.com/ywpkwon/siamese_tf_mnist/result.png) 
+</p>
 
 I have been interested in Siamese network. To my understanding, it is one way of dealing with weakly supervised problems. Its beauty lies in its simple scheme. It seems Siamese networks ( and Triplet network) have been popularly used in many applications such as face similarity and image matching .
 
