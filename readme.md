@@ -1,8 +1,8 @@
 # Implementing Siamese network using Tensorflow with MNIST example
 
-I have been interested in Siamese network. To my understading, it is one way of dealing with weakly supuervised problems. Its beauty lies in its simple scheme. It seems Siamese networks ( and Triplet network) have been popularly used in many applications such as face similarity and image matching .
+I have been interested in Siamese network. To my understanding, it is one way of dealing with weakly supervised problems. Its beauty lies in its simple scheme. It seems Siamese networks ( and Triplet network) have been popularly used in many applications such as face similarity and image matching .
 
-Here, I implement a simple Siamese example. It embeds hand-written digits into 2D space. In other words, it embeds 28$$$\times$$$28 image (a data point in 794D) into a point in 2D, i.e., $$$ x\in \mathbb{R}^{794} \rightarrow y\in \mathbb{R}^2 $$$. A loss function controls the embedding to be closer for guys in the same class and futher for guys in the different classes.
+Here, I implement a simple Siamese example. It embeds hand-written digits into 2D space. In other words, it embeds 28$$$\times$$$28 image (a data point in 794D) into a point in 2D, i.e., $$$ x\in \mathbb{R}^{794} \rightarrow y\in \mathbb{R}^2 $$$. A loss function controls the embedding to be closer for guys in the same class and further for guys in the different classes.
 
 I tried to keep codes simple, including
 
@@ -33,5 +33,5 @@ It will save the final result in `embed.txt`. If you just want to visualize it a
 $ python visualize.py
 ```
 
-For visualizion and network architecture design, I refered [here](http://andersbll.github.io/deeppy-website/examples/siamese_mnist.html). 
+For visualization and network architecture design, I refer [here](http://andersbll.github.io/deeppy-website/examples/siamese_mnist.html). 
 
