@@ -1,10 +1,10 @@
 # Implementing Siamese network using Tensorflow with MNIST example
 
-<p align="center"> <img src="./result.png" width="400"> </p>
+<p align="center"> <img src="./result.tiff" width="400"> </p>
 
-I have been interested in Siamese network. To my understanding, it is one way of dealing with weakly supervised problems. Its beauty lies in its simple scheme. It seems Siamese networks ( and Triplet network) have been popularly used in many applications such as face similarity and image matching .
+I have been interested in Siamese network. To my understanding, it is one way of dealing with weakly supervised problems. Its beauty lies in its simple scheme. It seems Siamese networks (and Triplet network) have been popularly used in many applications such as face similarity and image matching.
 
-Here, I implement a simple Siamese example. It embeds hand-written digits into 2D space. A loss function controls the embedding to be closer for guys in the same class and further for guys in the different classes.
+Here, a [webpage](http://andersbll.github.io/deeppy-website/examples/) motivates me to implement a similar Siamese network using Tensorflow. It embeds hand-written digits into 2D space. A loss function controls the embedding to be closer for guys in the same class and further for guys in the different classes. I borroowed visualization part from the original source. 
 
 I tried to keep codes simple, including
 
@@ -23,13 +23,4 @@ step 34760: loss 0.113
 step 34770: loss 0.078
 ...
 ```
-This will download and extract MNIST dataset (once downloaded, it will skip downloading next time). The result will look like the image above.
-
-It will save the final embedding in `embed.txt`. So, if you just want to visualize it again, then run simply
-
-```bash
-$ python visualize.py
-```
-
-For visualization and network architecture design, I refer [here](http://andersbll.github.io/deeppy-website/examples/siamese_mnist.html). 
-
+This will download and extract MNIST dataset (once downloaded, it will skip downloading next time). The result will look like the image on the top. It saves an intermediate model regularly (with name `model.ckpt`) while training. When you run `run.py`, if the file exists, you will be asked if you simply want to load it. `yes` will load the model, and show embedding result. So you can see the resulting embedding anytime by stopping training or during training.

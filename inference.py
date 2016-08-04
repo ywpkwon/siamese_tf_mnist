@@ -8,13 +8,13 @@ class siamese:
         self.x2 = tf.placeholder(tf.float32, [None, 784])
 
         with tf.variable_scope("siamese") as scope:
-            o1 = self.network(self.x1)
+            self.o1 = self.network(self.x1)
             scope.reuse_variables()
-            o2 = self.network(self.x2)
+            self.o2 = self.network(self.x2)
 
         # Create loss
         self.y_ = tf.placeholder(tf.float32, [None])
-        self.loss = self.loss_with_step(o1, o2, self.y_)
+        self.loss = self.loss_with_spring()
 
     def network(self, x):
         weights = []
@@ -34,11 +34,11 @@ class siamese:
         fc = tf.nn.bias_add(tf.matmul(bottom, W), b)
         return fc
 
-    def loss_with_spring(self, o1, o2, y_):
+    def loss_with_spring(self):
         margin = 5.0
-        labels_t = y_
-        labels_f = tf.sub(1.0, y_, name="1-yi")          # labels_ = !labels;
-        eucd2 = tf.pow(tf.sub(o1, o2), 2)
+        labels_t = self.y_
+        labels_f = tf.sub(1.0, self.y_, name="1-yi")          # labels_ = !labels;
+        eucd2 = tf.pow(tf.sub(self.o1, self.o2), 2)
         eucd2 = tf.reduce_sum(eucd2, 1)
         eucd = tf.sqrt(eucd2+1e-6, name="eucd")
         C = tf.constant(margin, name="C")
@@ -51,11 +51,11 @@ class siamese:
         loss = tf.reduce_mean(losses, name="loss")
         return loss
 
-    def loss_with_step(self, o1, o2, y_):
+    def loss_with_step(self):
         margin = 5.0
-        labels_t = y_
-        labels_f = tf.sub(1.0, y_, name="1-yi")          # labels_ = !labels;
-        eucd2 = tf.pow(tf.sub(o1, o2), 2)
+        labels_t = self.y_
+        labels_f = tf.sub(1.0, self.y_, name="1-yi")          # labels_ = !labels;
+        eucd2 = tf.pow(tf.sub(self.o1, self.o2), 2)
         eucd2 = tf.reduce_sum(eucd2, 1)
         eucd = tf.sqrt(eucd2+1e-6, name="eucd")
         C = tf.constant(margin, name="C")
