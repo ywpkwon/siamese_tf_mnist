@@ -1,21 +1,9 @@
-# Copyright 2015 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
 
-"""A very simple MNIST classifier.
-See extensive documentation at
-http://tensorflow.org/tutorials/mnist/beginners/index.md
+""" Siamese implementation using Tensorflow with MNIST example.
+This siamese network embeds a 28x28 image (a point in 784D) 
+into a point in 2D.
+
+By Youngwook Paul Kwon (young at berkeley.edu)
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -28,6 +16,8 @@ import tensorflow as tf
 import numpy as np
 import os
 import visualize
+
+import siame
 
 
 def fc_layer(bottom, n_weight, name):
@@ -106,35 +96,24 @@ saver = tf.train.Saver()
 # Train
 tf.initialize_all_variables().run()
 
-if os.path.isfile('model'):
-    saver.restore(sess, 'model')
-    print('model loaded.')
-else:
-    for step in range(100000):
+for step in range(100000):
+    batch_x1, batch_y1 = mnist.train.next_batch(128)
+    batch_x2, batch_y2 = mnist.train.next_batch(128)
+    batch_y = (batch_y1 == batch_y2).astype('float')
+    _,loss_v = sess.run([train_step, loss], feed_dict={x1: batch_x1, x2: batch_x2, y_: batch_y})
 
-        batch_x1, batch_y1 = mnist.train.next_batch(128)
-        batch_x2, batch_y2 = mnist.train.next_batch(128)
-        batch_y = (batch_y1 == batch_y2).astype('float')
-        _,loss_v = sess.run([train_step, loss], feed_dict={x1: batch_x1, x2: batch_x2, y_: batch_y})
+    if np.isnan(loss_v):
+        print('Model diverged with loss = NaN')
+        quit()
 
-        if np.isnan(loss_v):
-            print('Model diverged with loss = NaN')
-            quit()
+    if step % 10 == 0:
+        print ('step %d: loss %.3f' % (step, loss_v))
 
-        if step % 10 == 0:
-            print ('step %d: loss %.3f' % (step, loss_v))
-
-        if step % 1000 == 0 and step > 0:
-            saver.save(sess, 'model' )
-
+    if step % 1000 == 0 and step > 0:
+        saver.save(sess, 'model.ckpt')
 
 embed = o1.eval({x1: mnist.test.images})
 embed.tofile('embed.txt')
 
 x_test = mnist.test.images.reshape([-1, 28, 28])
 visualize.visualize(embed, x_test)
-
-# Test trained model
-# correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-# accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-# print(accuracy.eval({x: mnist.test.images, y_: mnist.test.labels}))
