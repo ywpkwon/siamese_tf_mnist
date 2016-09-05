@@ -61,12 +61,10 @@ if new:
 
         if step % 1000 == 0 and step > 0:
             saver.save(sess, 'model.ckpt')
+            embed = siamese.o1.eval({siamese.x1: mnist.test.images})
+            embed.tofile('embed.txt')
 else:
     saver.restore(sess, 'model.ckpt')
-
-# start embedding (testing)
-embed = siamese.o1.eval({siamese.x1: mnist.test.images})
-embed.tofile('embed.txt')
 
 # visualize result
 x_test = mnist.test.images.reshape([-1, 28, 28])
