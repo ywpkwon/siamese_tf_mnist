@@ -32,7 +32,7 @@ $ python run.py
 We found model.ckpt file. Do you want to load it [yes/no]? yes
 ```
 
-For your convenience, while training, embedding results are keep updated in `embed.txt`. So you can see an resulting embedding anytime (by stopping training or with a separate cmd/shell while training), using
+For your convenience, while training, embedding results are keeping updated in `embed.txt`. So you can see an resulting embedding anytime (by stopping training or with a separate cmd/shell while training), using
 
 ```bash
 $ python visualize.py
